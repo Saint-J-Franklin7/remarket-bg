@@ -121,7 +121,7 @@ export async function sendNewOrderToSeller(order: Order, waybillPdf?: string | n
     attachments: waybillPdf ? [{
       content: waybillPdf,
       filename: `waybill-${order.trackingNumber}.pdf`,
-      type: 'application/pdf',
+      contentType: 'application/pdf',
     }] : undefined,
   })
 }
