@@ -75,7 +75,7 @@ export default function CheckoutPage() {
     const errs: Record<string, string> = {}
     if (!name.trim()) errs.name = 'Въведете имена'
     if (!phone.trim() || !/^[\d\s\+\-]{8,15}$/.test(phone)) errs.phone = 'Невалиден телефон'
-    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.email = 'Невалиден имейл'
+    if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.email = 'Невалиден имейл'
     if (!selectedOffice) errs.office = 'Изберете офис за доставка'
     return errs
   }
