@@ -20,11 +20,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="bg" className={inter.variable}>
-      <body className="min-h-screen flex flex-col">
+    <html lang="bg" className={`${inter.variable} overflow-x-hidden`}>
+      <body className="min-h-screen flex flex-col overflow-x-hidden w-full">
         <CartProvider>
           <Header />
-          <div className="flex-1">{children}</div>
+          <div className="flex-1 w-full overflow-x-hidden">{children}</div>
           <Footer />
         </CartProvider>
       </body>

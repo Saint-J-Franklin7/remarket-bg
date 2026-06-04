@@ -25,7 +25,7 @@ export default function ProductDetail({ product }: { product: Product }) {
   }
 
   return (
-    <main className="max-w-5xl mx-auto px-4 py-10 overflow-hidden">
+    <main className="max-w-5xl mx-auto px-4 py-10 w-full overflow-x-hidden">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8 min-w-0">
         <Link href="/" className="hover:text-brand transition-colors">Начало</Link>
