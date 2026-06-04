@@ -1,9 +1,11 @@
 import { Resend } from 'resend'
 import { Order } from './types'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 const FROM = 'РеМаркет <noreply@remarketbg.com>'
+
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY)
+}
 
 export async function sendOrderConfirmationToCustomer(order: Order) {
   const courierName = order.delivery.courier === 'econt' ? 'Еконт' : 'Спиди'
@@ -19,7 +21,7 @@ export async function sendOrderConfirmationToCustomer(order: Order) {
     ? `<p style="margin:16px 0 0;">Номер за проследяване: <strong style="color:#0096D6;">${order.trackingNumber}</strong></p>`
     : ''
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM,
     to: order.customer.email,
     subject: `Поръчка №${order.id.substring(0, 8).toUpperCase()} — потвърждение`,
@@ -68,7 +70,7 @@ export async function sendNewOrderToSeller(order: Order) {
     </tr>`)
     .join('')
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM,
     to: process.env.SELLER_EMAIL!,
     subject: `🛒 Нова поръчка — ${order.total.toFixed(2)} лв. — ${order.customer.name}`,
