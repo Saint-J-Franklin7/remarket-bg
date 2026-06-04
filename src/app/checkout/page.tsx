@@ -282,7 +282,7 @@ export default function CheckoutPage() {
                     <span className="text-gray-400 text-xs">× {item.quantity}</span>
                   </span>
                   <span className="font-semibold shrink-0">
-                    {(item.product.price * item.quantity).toFixed(2)} лв.
+                    {(item.product.price * item.quantity).toFixed(2)} €
                   </span>
                 </div>
               ))}
@@ -291,7 +291,7 @@ export default function CheckoutPage() {
             <div className="border-t border-border pt-4 mb-5">
               <div className="flex justify-between font-black text-lg">
                 <span>Общо</span>
-                <span>{total.toFixed(2)} лв.</span>
+                <span>{total.toFixed(2)} €</span>
               </div>
               <p className="text-xs text-gray-400 mt-1">Плащате при получаване</p>
             </div>

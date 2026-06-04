@@ -90,7 +90,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                     </p>
                   </Link>
                   <p className="text-sm font-black text-dark mt-1">
-                    {(item.product.price * item.quantity).toFixed(2)} лв.
+                    {(item.product.price * item.quantity).toFixed(2)} €
                   </p>
 
                   {/* Quantity + Remove */}
@@ -127,7 +127,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
           <div className="border-t border-border px-5 py-5 space-y-3 bg-white">
             <div className="flex justify-between items-center">
               <span className="font-semibold text-gray-500">Общо</span>
-              <span className="font-black text-xl text-dark">{total.toFixed(2)} лв.</span>
+              <span className="font-black text-xl text-dark">{total.toFixed(2)} €</span>
             </div>
             <p className="text-xs text-gray-400">Доставката се изчислява при поръчката</p>
             <Link

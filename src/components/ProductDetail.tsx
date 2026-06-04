@@ -53,7 +53,7 @@ export default function ProductDetail({ product }: { product: Product }) {
           {/* Price */}
           <div className="flex items-baseline gap-2 mb-6">
             <span className="text-4xl font-black text-dark">{product.price.toFixed(2)}</span>
-            <span className="text-xl text-gray-400">лв.</span>
+            <span className="text-xl text-gray-400">€</span>
             <span className="text-sm text-gray-400">/ {product.unit}</span>
           </div>
 
@@ -103,7 +103,7 @@ export default function ProductDetail({ product }: { product: Product }) {
           <div className="mt-6 bg-surface rounded-xl p-4 border border-border text-sm text-gray-500 space-y-1.5">
             <p>🚚 Доставка с <strong className="text-dark">Еконт</strong> или <strong className="text-dark">Спиди</strong></p>
             <p>💳 Плащане при получаване — наложен платеж</p>
-            <p>📦 Безплатна доставка при поръчки над 100 лв.</p>
+            <p>📦 Безплатна доставка при поръчки над 100 €</p>
           </div>
         </div>
       </div>

@@ -134,7 +134,7 @@ export const products: Product[] = [
   {
     id: 'prod-17',
     name: 'Водоустойчиво хидроизолиращо лепило (300 г)',
-    description: 'Запечатва течове, пукнатини и проблемни зони. Устойчиво на дъжд, слънце, студ и влога. Силна адхезия към бетон, метал, дърво и плочки. Лесно нанасяне без специални инструменти. Налично и в 500 г (19.90 лв.).',
+    description: 'Запечатва течове, пукнатини и проблемни зони. Устойчиво на дъжд, слънце, студ и влога. Силна адхезия към бетон, метал, дърво и плочки. Лесно нанасяне без специални инструменти. Налично и в 500 г (19.90 €).',
     price: 14.90,
     images: ['/images/products/prod-17/1.png','/images/products/prod-17/2.jpg','/images/products/prod-17/3.jpg','/images/products/prod-17/4.jpg','/images/products/prod-17/5.jpg','/images/products/prod-17/6.jpg','/images/products/prod-17/7.jpg'],
     category: 'Инструменти', inStock: true, minOrder: 1, unit: 'бр.',

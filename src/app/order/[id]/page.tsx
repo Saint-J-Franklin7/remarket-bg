@@ -77,14 +77,14 @@ export default function OrderPage({ params }: { params: Promise<{ id: string }> 
           {order.items.map((item, i) => (
             <div key={i} className="flex justify-between text-sm">
               <span className="text-gray-500">{item.name} <span className="text-gray-400">× {item.quantity}</span></span>
-              <span className="font-semibold">{(item.price * item.quantity).toFixed(2)} лв.</span>
+              <span className="font-semibold">{(item.price * item.quantity).toFixed(2)} €</span>
             </div>
           ))}
         </div>
 
         <div className="border-t border-border pt-4 flex justify-between font-black text-lg">
           <span>Общо</span>
-          <span>{order.total.toFixed(2)} лв.</span>
+          <span>{order.total.toFixed(2)} €</span>
         </div>
       </div>
 

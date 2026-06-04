@@ -84,7 +84,7 @@ async function createSpeedyShipment(order: Order): Promise<string | null> {
         content: { parcelsCount: 1, totalWeight: 1, contents: 'Стоки', package: 'BOX' },
         payment: {
           courierServicePayer: 'SENDER',
-          cod: { amount: order.total, processingType: 'CASH' },
+          cod: { amount: order.total, currency: 'BGN', processingType: 'CASH' },
         },
       }),
     })

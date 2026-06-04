@@ -65,7 +65,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <div className="flex items-center justify-between mt-auto pt-3">
           <div>
             <span className="text-lg font-black text-dark">{product.price.toFixed(2)}</span>
-            <span className="text-sm text-gray-400 ml-1">лв.</span>
+            <span className="text-sm text-gray-400 ml-1">€</span>
           </div>
           <button
             onClick={handleAdd}
