@@ -10,16 +10,23 @@
   --font-sans: var(--font-inter), Arial, sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
 body {
   background-color: #F7FAFF;
   color: #0F172A;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* Hide scrollbar but keep scroll */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
 :focus-visible {
   outline: 2px solid #E05A1C;

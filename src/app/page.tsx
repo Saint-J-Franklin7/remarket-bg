@@ -39,13 +39,13 @@ export default function HomePage() {
 
       {/* Catalog */}
       <section id="catalog" className="max-w-6xl mx-auto px-4 py-12">
-        {/* Category filters */}
-        <div id="categories" className="flex flex-wrap gap-2 mb-8">
+        {/* Category filters — scroll horizontal sur mobile, wrap sur desktop */}
+        <div id="categories" className="flex gap-2 mb-8 overflow-x-auto scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap md:overflow-x-visible">
           {CATEGORIES.map(cat => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all shrink-0 ${
                 activeCategory === cat
                   ? 'bg-brand text-white shadow-sm'
                   : 'bg-white text-dark border border-border hover:border-brand hover:text-brand'

@@ -25,15 +25,15 @@ export default function ProductDetail({ product }: { product: Product }) {
   }
 
   return (
-    <main className="max-w-5xl mx-auto px-4 py-10">
+    <main className="max-w-5xl mx-auto px-4 py-10 overflow-hidden">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
+      <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8 min-w-0">
         <Link href="/" className="hover:text-brand transition-colors">Начало</Link>
         <span>/</span>
         <span className="text-dark font-medium">{product.name}</span>
       </nav>
 
-      <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
+      <div className="grid md:grid-cols-2 gap-8 lg:gap-16 min-w-0">
         {/* Gallery */}
         <div>
           <ImageGallery images={product.images} productName={product.name} />
@@ -45,10 +45,10 @@ export default function ProductDetail({ product }: { product: Product }) {
         </div>
 
         {/* Info */}
-        <div className="flex flex-col">
+        <div className="flex flex-col min-w-0">
           <span className="text-sm font-semibold text-brand mb-2">{product.category}</span>
           <h1 className="text-2xl md:text-3xl font-black text-dark mb-4 leading-tight">{product.name}</h1>
-          <p className="text-gray-500 leading-relaxed mb-6">{product.description}</p>
+          <p className="text-gray-500 leading-relaxed mb-6 break-words">{product.description}</p>
 
           {/* Price */}
           <div className="flex items-baseline gap-2 mb-6">
