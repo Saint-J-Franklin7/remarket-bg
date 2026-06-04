@@ -68,7 +68,7 @@ export async function sendOrderConfirmationToCustomer(order: Order) {
   })
 }
 
-export async function sendNewOrderToSeller(order: Order) {
+export async function sendNewOrderToSeller(order: Order, waybillPdf?: string | null) {
   const courierName = order.delivery.courier === 'econt' ? 'Еконт' : 'Спиди'
   const itemsHtml = order.items.map(i => `
     <tr>
@@ -118,5 +118,10 @@ export async function sendNewOrderToSeller(order: Order) {
       </div>
     `,
     text: `Нова поръчка!\nКлиент: ${order.customer.name}\nТелефон: ${order.customer.phone}\nКуриер: ${courierName} — ${order.delivery.officeName}\nОбщо: ${order.total.toFixed(2)} €${order.trackingNumber ? `\nTracking: ${order.trackingNumber}` : ''}`,
+    attachments: waybillPdf ? [{
+      content: waybillPdf,
+      filename: `waybill-${order.trackingNumber}.pdf`,
+      type: 'application/pdf',
+    }] : undefined,
   })
 }

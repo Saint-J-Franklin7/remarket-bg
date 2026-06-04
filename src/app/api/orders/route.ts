@@ -55,6 +55,31 @@ async function getSpeedyClientId(user: string, pass: string): Promise<number> {
   return data.clientId
 }
 
+async function getSpeedyWaybillPdf(trackingNumber: string): Promise<string | null> {
+  const user = process.env.SPEEDY_USER
+  const pass = process.env.SPEEDY_PASS
+  if (!user || !pass) return null
+  try {
+    const res = await fetch('https://api.speedy.bg/v1/print/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userName: user,
+        password: pass,
+        language: 'BG',
+        parcels: [{ id: Number(trackingNumber) }],
+        labelFormat: 'PDF',
+        additionalBarcodeRows: 0,
+      }),
+    })
+    if (!res.ok) return null
+    const buf = await res.arrayBuffer()
+    return Buffer.from(buf).toString('base64')
+  } catch {
+    return null
+  }
+}
+
 async function createSpeedyShipment(order: Order): Promise<string | null> {
   const user = process.env.SPEEDY_USER
   const pass = process.env.SPEEDY_PASS
@@ -131,9 +156,13 @@ export async function POST(request: NextRequest) {
 
     orders.set(order.id, order)
 
-    // Envoyer les emails en parallèle (non bloquant)
+    // Récupérer le PDF waybill Speedy et envoyer les emails (non bloquant)
+    const waybillPdf = order.trackingNumber && order.delivery.courier === 'speedy'
+      ? await getSpeedyWaybillPdf(order.trackingNumber).catch(() => null)
+      : null
+
     Promise.all([
-      sendNewOrderToSeller(order),
+      sendNewOrderToSeller(order, waybillPdf),
       sendOrderConfirmationToCustomer(order),
     ]).catch(err => console.error('[Emails]', err))
 
