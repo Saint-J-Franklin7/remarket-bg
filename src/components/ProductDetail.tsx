@@ -35,7 +35,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
       <div className="grid md:grid-cols-2 gap-8 lg:gap-16 min-w-0">
         {/* Gallery */}
-        <div>
+        <div className="min-w-0">
           <ImageGallery images={product.images} productName={product.name} />
           {product.badge && (
             <span className="inline-block mt-3 bg-brand text-white text-sm font-bold px-3 py-1.5 rounded-full">

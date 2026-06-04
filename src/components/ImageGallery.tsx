@@ -42,7 +42,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
   return (
     <>
       {/* Main display */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 w-full min-w-0">
         {/* Main image */}
         <div
           className="relative aspect-square bg-white rounded-2xl border border-border overflow-hidden group cursor-zoom-in"
