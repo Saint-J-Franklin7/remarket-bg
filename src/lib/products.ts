@@ -192,7 +192,7 @@ export const products: Product[] = [
     name: 'Преносима бутилка за вода от неръждаема стомана за домашни любимци',
     description: 'Практично решение за осигуряване на вода за кучета по време на разходки, пътувания и активности на открито. Сферична форма с вградена купичка за пиене. Изработена от неръждаема стомана 304. Система против разливане, вградена кука за закачане. Подходяща за разходки, планина, пътувания и къмпинг.',
     price: 19.90,
-    images: ['/images/products/prod-23/2.jpg','/images/products/prod-23/3.jpg'],
+    images: ['/images/products/prod-23b/0.png','/images/products/prod-23b/1.jpg','/images/products/prod-23b/2.jpg','/images/products/prod-23b/3.jpg','/images/products/prod-23b/4.jpg','/images/products/prod-23b/5.jpg','/images/products/prod-23b/6.jpg','/images/products/prod-23b/7.jpg','/images/products/prod-23b/8.jpg','/images/products/prod-23b/9.jpg'],
     category: 'Домашни любимци', inStock: true, minOrder: 1, unit: 'бр.',
   },
   {
