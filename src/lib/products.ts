@@ -184,7 +184,15 @@ export const products: Product[] = [
     name: 'Преносим диспенсър за вода за кучета',
     description: 'Превръща стандартна бутилка вода в удобна поилка за кучета по времe на разходки. Сгъваем и компактен дизайн, херметично затваряне против течове. Съвместим с повечето стандартни бутилки. Лесно почистване.',
     price: 9.90,
-    images: ['/images/products/prod-23/1.png','/images/products/prod-23/2.jpg','/images/products/prod-23/3.jpg','/images/products/prod-23/4.jpg','/images/products/prod-23/5.jpg','/images/products/prod-23/6.jpg'],
+    images: ['/images/products/prod-23/1.png','/images/products/prod-23/4.jpg','/images/products/prod-23/5.jpg','/images/products/prod-23/6.jpg'],
+    category: 'Домашни любимци', inStock: true, minOrder: 1, unit: 'бр.',
+  },
+  {
+    id: 'prod-23b',
+    name: 'Накрайник поилка за кучета за бутилка',
+    description: 'Завинтва се директно на стандартна пластмасова бутилка и я превръща в поилка за кучета. Наклонете бутилката — водата изтича в коритото. Без нужда от допълнителен контейнер. Компактен, лек и лесен за почистване.',
+    price: 7.90,
+    images: ['/images/products/prod-23/2.jpg','/images/products/prod-23/3.jpg'],
     category: 'Домашни любимци', inStock: true, minOrder: 1, unit: 'бр.',
   },
   {
