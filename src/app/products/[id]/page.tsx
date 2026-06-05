@@ -1,10 +1,14 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { getProduct } from '@/lib/products'
+import { getProduct, products } from '@/lib/products'
 import ProductDetail from '@/components/ProductDetail'
 
 interface Props {
   params: Promise<{ id: string }>
+}
+
+export function generateStaticParams() {
+  return products.map(p => ({ id: p.id }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -13,7 +17,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) return {}
 
   const image = product.images[0]
-  const imageUrl = image.startsWith('http') ? image : `https://www.remarketbg.com${image}`
 
   return {
     title: `${product.name} — РеМаркет`,
@@ -23,7 +26,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: product.description,
       url: `https://www.remarketbg.com/products/${id}`,
       siteName: 'РеМаркет',
-      images: [{ url: imageUrl, width: 1200, height: 1200, alt: product.name }],
+      images: [{
+        url: `https://www.remarketbg.com${image}`,
+        width: 800,
+        height: 800,
+        alt: product.name,
+      }],
       type: 'website',
       locale: 'bg_BG',
     },
@@ -31,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title: product.name,
       description: product.description,
-      images: [imageUrl],
+      images: [`https://www.remarketbg.com${image}`],
     },
   }
 }
