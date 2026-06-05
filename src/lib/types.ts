@@ -42,10 +42,11 @@ export interface Order {
     email: string
   }
   delivery: {
-    courier: 'econt' | 'speedy'
-    officeId: string
-    officeName: string
-    officeAddress: string
+    courier: 'econt' | 'speedy' | 'home'
+    officeId?: string
+    officeName?: string
+    officeAddress?: string
+    homeAddress?: string
   }
   items: OrderItem[]
   subtotal: number

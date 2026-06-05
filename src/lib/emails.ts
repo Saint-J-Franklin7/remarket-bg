@@ -8,7 +8,7 @@ function getResend() {
 }
 
 export async function sendOrderConfirmationToCustomer(order: Order) {
-  const courierName = order.delivery.courier === 'econt' ? 'Еконт' : 'Спиди'
+  const courierName = order.delivery.courier === 'econt' ? 'Еконт' : order.delivery.courier === 'speedy' ? 'Спиди' : 'Доставка до адрес'
   const itemsHtml = order.items.map(i => `
     <tr>
       <td style="padding:8px 0;border-bottom:1px solid #eee;color:#374151;">${i.name}</td>
@@ -43,9 +43,12 @@ export async function sendOrderConfirmationToCustomer(order: Order) {
           <p style="font-size:12px;color:#9ca3af;margin:4px 0 24px;">Плащате при получаване — наложен платеж</p>
 
           <div style="background:#F7FAFF;border-radius:8px;padding:16px;border:1px solid #E2EAF4;">
-            <p style="margin:0 0 6px;font-size:14px;"><strong>Куриер:</strong> ${courierName}</p>
-            <p style="margin:0 0 6px;font-size:14px;"><strong>Офис:</strong> ${order.delivery.officeName}</p>
-            <p style="margin:0;font-size:14px;"><strong>Адрес:</strong> ${order.delivery.officeAddress}</p>
+            <p style="margin:0 0 6px;font-size:14px;"><strong>Доставка:</strong> ${courierName}</p>
+            ${order.delivery.courier === 'home'
+              ? `<p style="margin:0;font-size:14px;"><strong>Адрес:</strong> ${order.delivery.homeAddress}</p>`
+              : `<p style="margin:0 0 6px;font-size:14px;"><strong>Офис:</strong> ${order.delivery.officeName}</p>
+            <p style="margin:0;font-size:14px;"><strong>Адрес:</strong> ${order.delivery.officeAddress}</p>`
+            }
           </div>
 
           <p style="color:#64748b;font-size:13px;margin-top:24px;text-align:center;">
@@ -58,7 +61,7 @@ export async function sendOrderConfirmationToCustomer(order: Order) {
 }
 
 export async function sendNewOrderToSeller(order: Order) {
-  const courierName = order.delivery.courier === 'econt' ? 'Еконт' : 'Спиди'
+  const courierName = order.delivery.courier === 'econt' ? 'Еконт' : order.delivery.courier === 'speedy' ? 'Спиди' : 'Доставка до адрес'
   const itemsHtml = order.items.map(i => `
     <tr>
       <td style="padding:8px 0;border-bottom:1px solid #eee;color:#374151;">${i.name}</td>
@@ -81,9 +84,12 @@ export async function sendNewOrderToSeller(order: Order) {
             <p style="margin:0 0 8px;font-size:15px;"><strong>👤 Клиент:</strong> ${order.customer.name}</p>
             <p style="margin:0 0 8px;font-size:15px;"><strong>📞 Телефон:</strong> <a href="tel:${order.customer.phone}" style="color:#1A2B8E;font-weight:700;">${order.customer.phone}</a></p>
             <p style="margin:0 0 8px;font-size:15px;"><strong>📧 Email:</strong> ${order.customer.email}</p>
-            <p style="margin:0 0 8px;font-size:15px;"><strong>🚚 Куриер:</strong> ${courierName}</p>
-            <p style="margin:0 0 8px;font-size:15px;"><strong>📦 Офис:</strong> ${order.delivery.officeName}</p>
-            <p style="margin:0;font-size:15px;"><strong>📍 Адрес:</strong> ${order.delivery.officeAddress}</p>
+            <p style="margin:0 0 8px;font-size:15px;"><strong>🚚 Доставка:</strong> ${courierName}</p>
+            ${order.delivery.courier === 'home'
+              ? `<p style="margin:0;font-size:15px;"><strong>🏠 Адрес:</strong> ${order.delivery.homeAddress}</p>`
+              : `<p style="margin:0 0 8px;font-size:15px;"><strong>📦 Офис:</strong> ${order.delivery.officeName}</p>
+            <p style="margin:0;font-size:15px;"><strong>📍 Адрес:</strong> ${order.delivery.officeAddress}</p>`
+            }
           </div>
 
           <table style="width:100%;border-collapse:collapse;margin-bottom:4px;">
@@ -98,6 +104,6 @@ export async function sendNewOrderToSeller(order: Order) {
         </div>
       </div>
     `,
-    text: `Нова поръчка!\nКлиент: ${order.customer.name}\nТелефон: ${order.customer.phone}\nEmail: ${order.customer.email}\nКуриер: ${courierName} — ${order.delivery.officeName}\nАдрес: ${order.delivery.officeAddress}\n\n${order.items.map(i => `${i.name} × ${i.quantity} — ${(i.price * i.quantity).toFixed(2)} €`).join('\n')}\n\nОбщо: ${order.total.toFixed(2)} €`,
+    text: `Нова поръчка!\nКлиент: ${order.customer.name}\nТелефон: ${order.customer.phone}\nEmail: ${order.customer.email}\nДоставка: ${courierName}${order.delivery.courier === 'home' ? `\nАдрес: ${order.delivery.homeAddress}` : `\nОфис: ${order.delivery.officeName}\nАдрес: ${order.delivery.officeAddress}`}\n\n${order.items.map(i => `${i.name} × ${i.quantity} — ${(i.price * i.quantity).toFixed(2)} €`).join('\n')}\n\nОбщо: ${order.total.toFixed(2)} €`,
   })
 }

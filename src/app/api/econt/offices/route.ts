@@ -31,13 +31,14 @@ export async function GET(request: NextRequest) {
 
     const data = await res.json()
 
+    const ql = q.toLowerCase()
+
     const offices = (data.offices || [])
       .filter((o: Record<string, unknown>) => {
         const addr = o.address as Record<string, unknown> | undefined
         const country = (addr?.city as Record<string, unknown> | undefined)?.country as Record<string, unknown> | undefined
         return country?.code2 === 'BG'
       })
-      .slice(0, 25)
       .map((o: Record<string, unknown>) => {
         const addr = o.address as Record<string, unknown>
         const city = addr?.city as Record<string, unknown> | undefined
@@ -52,6 +53,18 @@ export async function GET(request: NextRequest) {
           courier: 'econt',
         }
       })
+      .sort((a: { city: string; name: string }, b: { city: string; name: string }) => {
+        const aCityExact = a.city.toLowerCase() === ql
+        const bCityExact = b.city.toLowerCase() === ql
+        if (aCityExact && !bCityExact) return -1
+        if (!aCityExact && bCityExact) return 1
+        const aCityStarts = a.city.toLowerCase().startsWith(ql)
+        const bCityStarts = b.city.toLowerCase().startsWith(ql)
+        if (aCityStarts && !bCityStarts) return -1
+        if (!aCityStarts && bCityStarts) return 1
+        return a.name.localeCompare(b.name, 'bg')
+      })
+      .slice(0, 15)
 
     return NextResponse.json({ offices })
   } catch (err) {

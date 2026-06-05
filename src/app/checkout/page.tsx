@@ -22,7 +22,8 @@ export default function CheckoutPage() {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
-  const [courier, setCourier] = useState<'econt' | 'speedy'>('econt')
+  const [courier, setCourier] = useState<'econt' | 'speedy' | 'home'>('econt')
+  const [homeAddress, setHomeAddress] = useState('')
   const [officeQuery, setOfficeQuery] = useState('')
   const [officeResults, setOfficeResults] = useState<CourierOffice[]>([])
   const [selectedOffice, setSelectedOffice] = useState<CourierOffice | null>(null)
@@ -76,7 +77,11 @@ export default function CheckoutPage() {
     if (!name.trim()) errs.name = 'Въведете имена'
     if (!phone.trim() || !/^[\d\s\+\-]{8,15}$/.test(phone)) errs.phone = 'Невалиден телефон'
     if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.email = 'Невалиден имейл'
-    if (!selectedOffice) errs.office = 'Изберете офис за доставка'
+    if (courier === 'home') {
+      if (!homeAddress.trim()) errs.office = 'Въведете адрес за доставка'
+    } else {
+      if (!selectedOffice) errs.office = 'Изберете офис за доставка'
+    }
     return errs
   }
 
@@ -93,12 +98,14 @@ export default function CheckoutPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           customer: { name, phone, email },
-          delivery: {
-            courier,
-            officeId: selectedOffice!.id,
-            officeName: selectedOffice!.name,
-            officeAddress: selectedOffice!.address,
-          },
+          delivery: courier === 'home'
+            ? { courier, homeAddress }
+            : {
+                courier,
+                officeId: selectedOffice!.id,
+                officeName: selectedOffice!.name,
+                officeAddress: selectedOffice!.address,
+              },
           items: items.map(i => ({
             productId: i.productId,
             name: i.product.name,
@@ -188,84 +195,99 @@ export default function CheckoutPage() {
           <div className="bg-white rounded-2xl border border-border p-6">
             <h2 className="font-bold text-base mb-5">Избор на куриер</h2>
 
-            <div className="grid grid-cols-2 gap-3 mb-6">
-              {(['econt', 'speedy'] as const).map(c => (
+            <div className="grid grid-cols-3 gap-2 mb-6">
+              {(['econt', 'speedy', 'home'] as const).map(c => (
                 <button
                   key={c}
                   type="button"
                   onClick={() => setCourier(c)}
-                  className={`border-2 rounded-xl p-4 font-semibold text-sm transition-all ${
+                  className={`border-2 rounded-xl p-3 font-semibold text-sm transition-all ${
                     courier === c
                       ? 'border-brand bg-brand-50 text-brand'
                       : 'border-border hover:border-gray-300 text-dark'
                   }`}
                 >
-                  {c === 'econt' ? '🟢 Еконт' : '🔴 Спиди'}
+                  {c === 'econt' ? '🟢 Еконт' : c === 'speedy' ? '🔴 Спиди' : '🏠 До адрес'}
                 </button>
               ))}
             </div>
 
-            <div ref={dropdownRef} className="relative">
-              <label className="block text-sm font-medium mb-1.5">Офис за доставка</label>
+            {courier === 'home' ? (
+              <div>
+                <label className="block text-sm font-medium mb-1.5">Адрес за доставка</label>
+                <textarea
+                  value={homeAddress}
+                  onChange={e => setHomeAddress(e.target.value)}
+                  placeholder="Град, ул. / бул., №, вход, ет., ап., квартал..."
+                  rows={3}
+                  className={`w-full border rounded-xl px-4 py-3 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-brand/30 resize-none ${errors.office ? 'border-red-400' : 'border-border'}`}
+                />
+                <p className="text-xs text-gray-400 mt-1">Въведете пълния адрес включително улица, номер, вход и апартамент</p>
+                {errors.office && <p className="text-red-500 text-xs mt-1">{errors.office}</p>}
+              </div>
+            ) : (
+              <div ref={dropdownRef} className="relative">
+                <label className="block text-sm font-medium mb-1.5">Офис за доставка</label>
 
-              {selectedOffice ? (
-                <div className={`border-2 border-brand rounded-xl px-4 py-3 flex justify-between items-start gap-2`}>
-                  <div>
-                    <p className="font-semibold text-sm text-dark">{selectedOffice.name}</p>
-                    <p className="text-xs text-gray-400 mt-0.5">{selectedOffice.address}</p>
+                {selectedOffice ? (
+                  <div className="border-2 border-brand rounded-xl px-4 py-3 flex justify-between items-start gap-2">
+                    <div>
+                      <p className="font-semibold text-sm text-dark">{selectedOffice.name}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">{selectedOffice.address}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => { setSelectedOffice(null); setOfficeQuery('') }}
+                      className="text-gray-300 hover:text-red-400 transition-colors text-lg shrink-0 mt-0.5"
+                    >×</button>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => { setSelectedOffice(null); setOfficeQuery('') }}
-                    className="text-gray-300 hover:text-red-400 transition-colors text-lg shrink-0 mt-0.5"
-                  >×</button>
-                </div>
-              ) : (
-                <>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={officeQuery}
-                      onChange={e => setOfficeQuery(e.target.value)}
-                      placeholder="Търсете по град или адрес..."
-                      className={`w-full border rounded-xl px-4 py-3 pr-10 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-brand/30 ${errors.office ? 'border-red-400' : 'border-border'}`}
-                    />
-                    {loadingOffices && (
-                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                        <div className="w-4 h-4 border-2 border-brand border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={officeQuery}
+                        onChange={e => setOfficeQuery(e.target.value)}
+                        placeholder="Търсете по град или адрес..."
+                        className={`w-full border rounded-xl px-4 py-3 pr-10 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-brand/30 ${errors.office ? 'border-red-400' : 'border-border'}`}
+                      />
+                      {loadingOffices && (
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                          <div className="w-4 h-4 border-2 border-brand border-t-transparent rounded-full animate-spin" />
+                        </div>
+                      )}
+                    </div>
+
+                    {showDropdown && officeResults.length > 0 && (
+                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-border rounded-xl shadow-xl z-30 max-h-56 overflow-y-auto">
+                        {officeResults.map(office => (
+                          <button
+                            key={office.id}
+                            type="button"
+                            onMouseDown={() => {
+                              setSelectedOffice(office)
+                              setOfficeQuery(office.name)
+                              setShowDropdown(false)
+                            }}
+                            className="w-full text-left px-4 py-3 hover:bg-surface transition-colors border-b border-border/50 last:border-0"
+                          >
+                            <p className="font-semibold text-sm text-dark">{office.name}</p>
+                            <p className="text-xs text-gray-400 mt-0.5">{office.address}</p>
+                          </button>
+                        ))}
                       </div>
                     )}
-                  </div>
 
-                  {showDropdown && officeResults.length > 0 && (
-                    <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-border rounded-xl shadow-xl z-30 max-h-56 overflow-y-auto">
-                      {officeResults.map(office => (
-                        <button
-                          key={office.id}
-                          type="button"
-                          onMouseDown={() => {
-                            setSelectedOffice(office)
-                            setOfficeQuery(office.name)
-                            setShowDropdown(false)
-                          }}
-                          className="w-full text-left px-4 py-3 hover:bg-surface transition-colors border-b border-border/50 last:border-0"
-                        >
-                          <p className="font-semibold text-sm text-dark">{office.name}</p>
-                          <p className="text-xs text-gray-400 mt-0.5">{office.address}</p>
-                        </button>
-                      ))}
-                    </div>
-                  )}
-
-                  {showDropdown && officeResults.length === 0 && !loadingOffices && debouncedQuery.length >= 2 && (
-                    <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-border rounded-xl shadow-lg z-30 px-4 py-3 text-sm text-gray-400">
-                      Няма намерени офиси
-                    </div>
-                  )}
-                </>
-              )}
-              {errors.office && <p className="text-red-500 text-xs mt-1">{errors.office}</p>}
-            </div>
+                    {showDropdown && officeResults.length === 0 && !loadingOffices && debouncedQuery.length >= 2 && (
+                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-border rounded-xl shadow-lg z-30 px-4 py-3 text-sm text-gray-400">
+                        Няма намерени офиси
+                      </div>
+                    )}
+                  </>
+                )}
+                {errors.office && <p className="text-red-500 text-xs mt-1">{errors.office}</p>}
+              </div>
+            )}
           </div>
         </div>
 

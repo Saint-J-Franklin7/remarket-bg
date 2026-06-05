@@ -22,8 +22,7 @@ export default function HomePage() {
             🚚 Доставка с Еконт и Спиди — Наложен платеж
           </div>
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-black mb-5 leading-tight">
-            Качество на <span className="text-brand">едро</span>.<br />
-            Доставка до вас.
+            Качество и <span className="text-brand">бърза доставка</span>.
           </h1>
           <p className="text-white/70 text-base md:text-lg max-w-xl mx-auto mb-8">
             Поръчайте онлайн — получавате до всяка точка в България. Плащате при получаване.

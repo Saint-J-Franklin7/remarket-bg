@@ -11,7 +11,7 @@ export default function Footer() {
             <span className="font-bold text-xl">Ре<span className="text-brand">Маркет</span></span>
           </div>
           <p className="text-sm text-white/60 leading-relaxed mb-3">
-            Качествени продукти на едро за България. Бърза доставка с Еконт и Спиди до всяка точка в страната.
+            Качествени продукти на достъпна цена. Бърза доставка с Еконт и Спиди до всяка точка в страната.
           </p>
           <p className="text-xs text-white/30">www.remarketbg.com</p>
         </div>

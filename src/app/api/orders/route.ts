@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { customer, delivery, items, subtotal, total } = body
 
-    if (!customer?.name || !customer?.phone || !delivery?.courier || !Array.isArray(items) || items.length === 0) {
+    if (!customer?.name || !customer?.phone || !['econt', 'speedy', 'home'].includes(delivery?.courier) || !Array.isArray(items) || items.length === 0) {
       return NextResponse.json({ error: 'Липсват задължителни полета' }, { status: 400 })
     }
 
