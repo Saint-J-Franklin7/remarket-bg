@@ -23,7 +23,12 @@ export default function CheckoutPage() {
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [courier, setCourier] = useState<'econt' | 'speedy' | 'home'>('econt')
-  const [homeAddress, setHomeAddress] = useState('')
+  const [homeCity, setHomeCity] = useState('')
+  const [homeStreet, setHomeStreet] = useState('')
+  const [homeNumber, setHomeNumber] = useState('')
+  const [homeEntrance, setHomeEntrance] = useState('')
+  const [homeFloor, setHomeFloor] = useState('')
+  const [homeApartment, setHomeApartment] = useState('')
   const [officeQuery, setOfficeQuery] = useState('')
   const [officeResults, setOfficeResults] = useState<CourierOffice[]>([])
   const [selectedOffice, setSelectedOffice] = useState<CourierOffice | null>(null)
@@ -78,7 +83,9 @@ export default function CheckoutPage() {
     if (!phone.trim() || !/^[\d\s\+\-]{8,15}$/.test(phone)) errs.phone = 'Невалиден телефон'
     if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.email = 'Невалиден имейл'
     if (courier === 'home') {
-      if (!homeAddress.trim()) errs.office = 'Въведете адрес за доставка'
+      if (!homeCity.trim()) errs.homeCity = 'Въведете град'
+      if (!homeStreet.trim()) errs.homeStreet = 'Въведете улица'
+      if (!homeNumber.trim()) errs.homeNumber = 'Въведете номер'
     } else {
       if (!selectedOffice) errs.office = 'Изберете офис за доставка'
     }
@@ -99,7 +106,16 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           customer: { name, phone, email },
           delivery: courier === 'home'
-            ? { courier, homeAddress }
+            ? {
+                courier,
+                homeAddress: [
+                  `${homeStreet} №${homeNumber}`,
+                  homeEntrance && `вх. ${homeEntrance}`,
+                  homeFloor && `ет. ${homeFloor}`,
+                  homeApartment && `ап. ${homeApartment}`,
+                  homeCity,
+                ].filter(Boolean).join(', '),
+              }
             : {
                 courier,
                 officeId: selectedOffice!.id,
@@ -213,17 +229,74 @@ export default function CheckoutPage() {
             </div>
 
             {courier === 'home' ? (
-              <div>
-                <label className="block text-sm font-medium mb-1.5">Адрес за доставка</label>
-                <textarea
-                  value={homeAddress}
-                  onChange={e => setHomeAddress(e.target.value)}
-                  placeholder="Град, ул. / бул., №, вход, ет., ап., квартал..."
-                  rows={3}
-                  className={`w-full border rounded-xl px-4 py-3 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-brand/30 resize-none ${errors.office ? 'border-red-400' : 'border-border'}`}
-                />
-                <p className="text-xs text-gray-400 mt-1">Въведете пълния адрес включително улица, номер, вход и апартамент</p>
-                {errors.office && <p className="text-red-500 text-xs mt-1">{errors.office}</p>}
+              <div className="space-y-3">
+                <div>
+                  <label className="block text-sm font-medium mb-1.5">Град <span className="text-red-400">*</span></label>
+                  <input
+                    type="text"
+                    value={homeCity}
+                    onChange={e => setHomeCity(e.target.value)}
+                    placeholder="София"
+                    className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 ${errors.homeCity ? 'border-red-400' : 'border-border'}`}
+                  />
+                  {errors.homeCity && <p className="text-red-500 text-xs mt-1">{errors.homeCity}</p>}
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="col-span-2">
+                    <label className="block text-sm font-medium mb-1.5">Улица / Булевард <span className="text-red-400">*</span></label>
+                    <input
+                      type="text"
+                      value={homeStreet}
+                      onChange={e => setHomeStreet(e.target.value)}
+                      placeholder="ул. Витоша"
+                      className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 ${errors.homeStreet ? 'border-red-400' : 'border-border'}`}
+                    />
+                    {errors.homeStreet && <p className="text-red-500 text-xs mt-1">{errors.homeStreet}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5">Номер <span className="text-red-400">*</span></label>
+                    <input
+                      type="text"
+                      value={homeNumber}
+                      onChange={e => setHomeNumber(e.target.value)}
+                      placeholder="12"
+                      className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 ${errors.homeNumber ? 'border-red-400' : 'border-border'}`}
+                    />
+                    {errors.homeNumber && <p className="text-red-500 text-xs mt-1">{errors.homeNumber}</p>}
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5">Вход</label>
+                    <input
+                      type="text"
+                      value={homeEntrance}
+                      onChange={e => setHomeEntrance(e.target.value)}
+                      placeholder="А"
+                      className="w-full border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5">Етаж</label>
+                    <input
+                      type="text"
+                      value={homeFloor}
+                      onChange={e => setHomeFloor(e.target.value)}
+                      placeholder="3"
+                      className="w-full border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5">Апартамент</label>
+                    <input
+                      type="text"
+                      value={homeApartment}
+                      onChange={e => setHomeApartment(e.target.value)}
+                      placeholder="7"
+                      className="w-full border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30"
+                    />
+                  </div>
+                </div>
               </div>
             ) : (
               <div ref={dropdownRef} className="relative">
