@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
         const country = city?.country as Record<string, unknown> | undefined
         if (country?.code2 !== 'BG') return false
         const officeName = (o.name as string | undefined) || ''
-        if (/апс|aps/i.test(officeName)) return false
+        if (/апс|aps|еконтомат|econt.*mat|automat/i.test(officeName)) return false
         const cityName = (city?.name as string | undefined)?.toLowerCase() || ''
         const street = (addr?.street as string | undefined)?.toLowerCase() || ''
         return cityName.includes(ql) || officeName.toLowerCase().includes(ql) || street.includes(ql)
