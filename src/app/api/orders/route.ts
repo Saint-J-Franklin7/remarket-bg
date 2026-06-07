@@ -27,10 +27,11 @@ export async function POST(request: NextRequest) {
 
     orders.set(order.id, order)
 
-    Promise.all([
-      sendNewOrderToSeller(order),
-      sendOrderConfirmationToCustomer(order),
-    ]).catch(err => console.error('[Emails]', err))
+    const emailJobs = [sendNewOrderToSeller(order)]
+    if (order.customer.email) emailJobs.push(sendOrderConfirmationToCustomer(order))
+    Promise.allSettled(emailJobs).then(results => {
+      results.forEach(r => { if (r.status === 'rejected') console.error('[Email]', r.reason) })
+    })
 
     return NextResponse.json(order, { status: 201 })
   } catch (err) {

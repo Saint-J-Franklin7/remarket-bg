@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
           Authorization: `Basic ${auth}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ filter: { nameFilter: q } }),
+        body: JSON.stringify({}),
       }
     )
 
@@ -36,8 +36,13 @@ export async function GET(request: NextRequest) {
     const offices = (data.offices || [])
       .filter((o: Record<string, unknown>) => {
         const addr = o.address as Record<string, unknown> | undefined
-        const country = (addr?.city as Record<string, unknown> | undefined)?.country as Record<string, unknown> | undefined
-        return country?.code2 === 'BG'
+        const city = addr?.city as Record<string, unknown> | undefined
+        const country = city?.country as Record<string, unknown> | undefined
+        if (country?.code2 !== 'BG') return false
+        const cityName = (city?.name as string | undefined)?.toLowerCase() || ''
+        const officeName = (o.name as string | undefined)?.toLowerCase() || ''
+        const street = (addr?.street as string | undefined)?.toLowerCase() || ''
+        return cityName.includes(ql) || officeName.includes(ql) || street.includes(ql)
       })
       .map((o: Record<string, unknown>) => {
         const addr = o.address as Record<string, unknown>
@@ -58,13 +63,9 @@ export async function GET(request: NextRequest) {
         const bCityExact = b.city.toLowerCase() === ql
         if (aCityExact && !bCityExact) return -1
         if (!aCityExact && bCityExact) return 1
-        const aCityStarts = a.city.toLowerCase().startsWith(ql)
-        const bCityStarts = b.city.toLowerCase().startsWith(ql)
-        if (aCityStarts && !bCityStarts) return -1
-        if (!aCityStarts && bCityStarts) return 1
         return a.name.localeCompare(b.name, 'bg')
       })
-      .slice(0, 15)
+      .slice(0, 20)
 
     return NextResponse.json({ offices })
   } catch (err) {
