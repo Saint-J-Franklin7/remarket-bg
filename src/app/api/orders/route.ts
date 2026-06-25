@@ -29,9 +29,8 @@ export async function POST(request: NextRequest) {
 
     const emailJobs = [sendNewOrderToSeller(order)]
     if (order.customer.email) emailJobs.push(sendOrderConfirmationToCustomer(order))
-    Promise.allSettled(emailJobs).then(results => {
-      results.forEach(r => { if (r.status === 'rejected') console.error('[Email]', r.reason) })
-    })
+    const emailResults = await Promise.allSettled(emailJobs)
+    emailResults.forEach(r => { if (r.status === 'rejected') console.error('[Email]', r.reason) })
 
     return NextResponse.json(order, { status: 201 })
   } catch (err) {
