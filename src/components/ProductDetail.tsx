@@ -9,6 +9,7 @@ import ImageGallery from '@/components/ImageGallery'
 import { getCompareAtPrice } from '@/lib/fakeMarketing'
 import StarRating from '@/components/StarRating'
 import CountdownTimer from '@/components/CountdownTimer'
+import ProductReviews from '@/components/ProductReviews'
 
 export default function ProductDetail({ product }: { product: Product }) {
   const { addItem } = useCart()
@@ -115,6 +116,8 @@ export default function ProductDetail({ product }: { product: Product }) {
           </div>
         </div>
       </div>
+
+      <ProductReviews productId={product.id} />
     </main>
   )
 }
