@@ -1,4 +1,9 @@
+'use client'
+
+import { useState } from 'react'
 import { getFakeReviews } from '@/lib/fakeReviews'
+
+const VISIBLE_BY_DEFAULT = 5
 
 function formatDaysAgo(days: number) {
   if (days < 7) return `преди ${days} ${days === 1 ? 'ден' : 'дни'}`
@@ -12,12 +17,15 @@ function formatDaysAgo(days: number) {
 
 export default function ProductReviews({ productId }: { productId: string }) {
   const reviews = getFakeReviews(productId)
+  const [expanded, setExpanded] = useState(false)
+  const visible = expanded ? reviews : reviews.slice(0, VISIBLE_BY_DEFAULT)
+  const remaining = reviews.length - visible.length
 
   return (
     <div id="reviews" className="mt-10 pt-8 border-t border-border scroll-mt-24">
       <h2 className="text-lg font-bold text-dark mb-5">Отзиви от клиенти</h2>
       <div className="space-y-5">
-        {reviews.map((r, i) => (
+        {visible.map((r, i) => (
           <div key={i} className="min-w-0">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <span className="font-semibold text-sm text-dark">{r.name}</span>
@@ -34,6 +42,15 @@ export default function ProductReviews({ productId }: { productId: string }) {
           </div>
         ))}
       </div>
+
+      {remaining > 0 && (
+        <button
+          onClick={() => setExpanded(true)}
+          className="mt-6 text-sm font-semibold text-brand hover:text-brand-dark transition-colors"
+        >
+          Виж още отзиви (+{remaining})
+        </button>
+      )}
     </div>
   )
 }
