@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { transliterateToCyrillic } from '@/lib/transliterate'
 
 interface PigeonLocation {
   id: number
@@ -21,13 +22,17 @@ export async function GET(request: NextRequest) {
 
     const data = await res.json()
     const ql = q.toLowerCase()
+    const qlTranslit = transliterateToCyrillic(q)
 
     const offices = ((data.locations || []) as PigeonLocation[])
-      .filter(l =>
-        l.city.toLowerCase().includes(ql) ||
-        l.name.toLowerCase().includes(ql) ||
-        l.address.toLowerCase().includes(ql)
-      )
+      .filter(l => {
+        const city = l.city.toLowerCase()
+        const name = l.name.toLowerCase()
+        const address = l.address.toLowerCase()
+        return [ql, qlTranslit].some(needle =>
+          city.includes(needle) || name.includes(needle) || address.includes(needle)
+        )
+      })
       .map(l => ({
         id: String(l.id),
         name: l.name,
@@ -36,8 +41,8 @@ export async function GET(request: NextRequest) {
         courier: 'pigeon' as const,
       }))
       .sort((a, b) => {
-        const aCityExact = a.city.toLowerCase() === ql
-        const bCityExact = b.city.toLowerCase() === ql
+        const aCityExact = [ql, qlTranslit].includes(a.city.toLowerCase())
+        const bCityExact = [ql, qlTranslit].includes(b.city.toLowerCase())
         if (aCityExact && !bCityExact) return -1
         if (!aCityExact && bCityExact) return 1
         return a.name.localeCompare(b.name, 'bg')

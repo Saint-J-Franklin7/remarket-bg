@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { transliterateToCyrillic } from '@/lib/transliterate'
 
 const ECONT_BASE = 'https://ee.econt.com/services'
 
@@ -32,6 +33,7 @@ export async function GET(request: NextRequest) {
     const data = await res.json()
 
     const ql = q.toLowerCase()
+    const qlTranslit = transliterateToCyrillic(q)
 
     const offices = (data.offices || [])
       .filter((o: Record<string, unknown>) => {
@@ -43,7 +45,10 @@ export async function GET(request: NextRequest) {
         if (/апс|aps|еконтомат|econt.*mat|automat/i.test(officeName)) return false
         const cityName = (city?.name as string | undefined)?.toLowerCase() || ''
         const street = (addr?.street as string | undefined)?.toLowerCase() || ''
-        return cityName.includes(ql) || officeName.toLowerCase().includes(ql) || street.includes(ql)
+        const officeNameLower = officeName.toLowerCase()
+        return [ql, qlTranslit].some(needle =>
+          cityName.includes(needle) || officeNameLower.includes(needle) || street.includes(needle)
+        )
       })
       .map((o: Record<string, unknown>) => {
         const addr = o.address as Record<string, unknown>
@@ -60,8 +65,8 @@ export async function GET(request: NextRequest) {
         }
       })
       .sort((a: { city: string; name: string }, b: { city: string; name: string }) => {
-        const aCityExact = a.city.toLowerCase() === ql
-        const bCityExact = b.city.toLowerCase() === ql
+        const aCityExact = [ql, qlTranslit].includes(a.city.toLowerCase())
+        const bCityExact = [ql, qlTranslit].includes(b.city.toLowerCase())
         if (aCityExact && !bCityExact) return -1
         if (!aCityExact && bCityExact) return 1
         return a.name.localeCompare(b.name, 'bg')

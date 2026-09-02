@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { transliterateToCyrillic } from '@/lib/transliterate'
 
 const SPEEDY_BASE = 'https://api.speedy.bg/v1'
 
@@ -22,7 +23,7 @@ export async function GET(request: NextRequest) {
         password: pass,
         language: 'BG',
         countryId: 100,
-        name: q,
+        name: transliterateToCyrillic(q),
         maxResults: 25,
       }),
     })
