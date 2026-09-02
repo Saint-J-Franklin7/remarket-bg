@@ -80,7 +80,7 @@ export default function CheckoutPage() {
   function validate() {
     const errs: Record<string, string> = {}
     if (!name.trim()) errs.name = 'Въведете имена'
-    if (!phone.trim() || !/^\d{7,15}$/.test(phone.replace(/[\s\+\-\(\)]/g, ''))) errs.phone = 'Невалиден телефон'
+    if (!phone.trim() || !/^(?:\+359|00359|0)[89]\d{8}$/.test(phone.replace(/[\s\-\(\)]/g, ''))) errs.phone = 'Невалиден телефон (напр. 0888123456)'
     if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.email = 'Невалиден имейл'
     if (courier === 'home') {
       if (!homeCity.trim()) errs.homeCity = 'Въведете град'

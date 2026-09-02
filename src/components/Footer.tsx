@@ -4,7 +4,7 @@ import Image from 'next/image'
 export default function Footer() {
   return (
     <footer className="bg-brand-dark text-white mt-16">
-      <div className="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div className="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
         <div>
           <div className="flex items-center gap-3 mb-4">
             <Image src="/logo.jpeg" alt="РеМаркет" width={44} height={44} className="rounded-full object-cover" />
@@ -20,6 +20,17 @@ export default function Footer() {
           <h3 className="font-semibold text-xs uppercase tracking-widest text-white/40 mb-4">Навигация</h3>
           <ul className="space-y-2.5 text-sm">
             {[['/', 'Начало'], ['/#categories', 'Категории'], ['/checkout', 'Количка']].map(([href, label]) => (
+              <li key={href}>
+                <Link href={href} className="text-white/70 hover:text-brand transition-colors">{label}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h3 className="font-semibold text-xs uppercase tracking-widest text-white/40 mb-4">Информация</h3>
+          <ul className="space-y-2.5 text-sm">
+            {[['/poveritelnost', 'Поверителност'], ['/vrashtane', 'Право на отказ'], ['/kompaniya', 'Данни за търговеца']].map(([href, label]) => (
               <li key={href}>
                 <Link href={href} className="text-white/70 hover:text-brand transition-colors">{label}</Link>
               </li>

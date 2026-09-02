@@ -6,6 +6,9 @@ import { useRouter } from 'next/navigation'
 import { Product } from '@/lib/types'
 import { useCart } from '@/context/CartContext'
 import ImageGallery from '@/components/ImageGallery'
+import { getCompareAtPrice } from '@/lib/fakeMarketing'
+import StarRating from '@/components/StarRating'
+import CountdownTimer from '@/components/CountdownTimer'
 
 export default function ProductDetail({ product }: { product: Product }) {
   const { addItem } = useCart()
@@ -48,14 +51,19 @@ export default function ProductDetail({ product }: { product: Product }) {
         <div className="flex flex-col min-w-0">
           <span className="text-sm font-semibold text-brand mb-2">{product.category}</span>
           <h1 className="text-2xl md:text-3xl font-black text-dark mb-4 leading-tight">{product.name}</h1>
-          <p className="text-gray-500 leading-relaxed mb-6 break-words">{product.description}</p>
+          <p className="text-gray-500 leading-relaxed mb-4 break-words">{product.description}</p>
+
+          <StarRating productId={product.id} className="mb-4" />
 
           {/* Price */}
-          <div className="flex items-baseline gap-2 mb-6">
+          <div className="flex items-baseline gap-2 mb-2">
             <span className="text-4xl font-black text-dark">{product.price.toFixed(2)}</span>
             <span className="text-xl text-gray-400">€</span>
             <span className="text-sm text-gray-400">/ {product.unit}</span>
+            <span className="text-lg text-gray-400 line-through">{getCompareAtPrice(product.id, product.price).toFixed(2)} €</span>
           </div>
+
+          <CountdownTimer />
 
           {product.inStock ? (
             <>

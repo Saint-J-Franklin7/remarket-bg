@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { Product } from '@/lib/types'
 import { useCart } from '@/context/CartContext'
+import { getCompareAtPrice } from '@/lib/fakeMarketing'
+import StarRating from '@/components/StarRating'
 
 export default function ProductCard({ product }: { product: Product }) {
   const { addItem } = useCart()
@@ -62,10 +64,13 @@ export default function ProductCard({ product }: { product: Product }) {
           <p className="text-xs text-gray-400 mb-2">Мин. {product.minOrder} {product.unit}</p>
         )}
 
+        <StarRating productId={product.id} className="mb-2" />
+
         <div className="flex items-center justify-between mt-auto pt-3">
           <div>
             <span className="text-lg font-black text-dark">{product.price.toFixed(2)}</span>
             <span className="text-sm text-gray-400 ml-1">€</span>
+            <span className="block text-xs text-gray-400 line-through">{getCompareAtPrice(product.id, product.price).toFixed(2)} €</span>
           </div>
           <button
             onClick={handleAdd}
