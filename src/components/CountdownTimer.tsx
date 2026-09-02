@@ -8,9 +8,10 @@ function pad(n: number) {
 
 function msUntilMidnight() {
   const now = new Date()
-  const midnight = new Date(now)
-  midnight.setHours(24, 0, 0, 0)
-  return midnight.getTime() - now.getTime()
+  const sofiaNow = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Sofia' }))
+  const sofiaMidnight = new Date(sofiaNow)
+  sofiaMidnight.setHours(24, 0, 0, 0)
+  return sofiaMidnight.getTime() - sofiaNow.getTime()
 }
 
 export default function CountdownTimer() {

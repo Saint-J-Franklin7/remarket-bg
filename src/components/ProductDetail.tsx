@@ -54,7 +54,7 @@ export default function ProductDetail({ product }: { product: Product }) {
           <h1 className="text-2xl md:text-3xl font-black text-dark mb-4 leading-tight">{product.name}</h1>
           <p className="text-gray-500 leading-relaxed mb-4 break-words">{product.description}</p>
 
-          <StarRating productId={product.id} className="mb-4" />
+          <StarRating productId={product.id} className="mb-4" href="#reviews" />
 
           {/* Price */}
           <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 mb-2">

@@ -1,10 +1,11 @@
+import Link from 'next/link'
 import { getFakeRating } from '@/lib/fakeMarketing'
 
-export default function StarRating({ productId, className = '', compact = false }: { productId: string; className?: string; compact?: boolean }) {
+export default function StarRating({ productId, className = '', compact = false, href }: { productId: string; className?: string; compact?: boolean; href?: string }) {
   const { rating, count } = getFakeRating(productId)
 
-  return (
-    <div className={`flex flex-wrap items-center gap-1 gap-y-0.5 min-w-0 ${className}`}>
+  const content = (
+    <>
       <div className="flex items-center shrink-0">
         {[0, 1, 2, 3, 4].map(i => {
           const fill = Math.max(0, Math.min(1, rating - i)) * 100
@@ -25,6 +26,18 @@ export default function StarRating({ productId, className = '', compact = false 
       <span className="text-xs text-gray-400 truncate">
         {compact ? `${rating.toFixed(1)} (${count})` : `${rating.toFixed(1)} · ${count} отзива`}
       </span>
-    </div>
+    </>
   )
+
+  const classes = `flex flex-wrap items-center gap-1 gap-y-0.5 min-w-0 ${className}`
+
+  if (href) {
+    return (
+      <Link href={href} className={`${classes} hover:opacity-70 transition-opacity cursor-pointer`}>
+        {content}
+      </Link>
+    )
+  }
+
+  return <div className={classes}>{content}</div>
 }

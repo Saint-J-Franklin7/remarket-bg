@@ -14,7 +14,7 @@ export default function ProductReviews({ productId }: { productId: string }) {
   const reviews = getFakeReviews(productId)
 
   return (
-    <div className="mt-10 pt-8 border-t border-border">
+    <div id="reviews" className="mt-10 pt-8 border-t border-border scroll-mt-24">
       <h2 className="text-lg font-bold text-dark mb-5">Отзиви от клиенти</h2>
       <div className="space-y-5">
         {reviews.map((r, i) => (
