@@ -13,8 +13,13 @@ export function getCompareAtPrice(productId: string, price: number): number {
   return Math.round(price * (1 + pct)) - 0.01
 }
 
+// Manual overrides for products the client wants to stand out (e.g. the best-seller).
+const RATING_OVERRIDES: Record<string, number> = {
+  'prod-01': 5,
+}
+
 export function getFakeRating(productId: string): { rating: number; count: number } {
-  const rating = Math.round((4 + seededRandom(productId + ':rating') * 0.5) * 10) / 10
+  const rating = RATING_OVERRIDES[productId] ?? Math.round((4 + seededRandom(productId + ':rating') * 0.5) * 10) / 10
   const count = 50 + Math.floor(seededRandom(productId + ':count') * 151)
   return { rating, count }
 }

@@ -9,7 +9,7 @@ export const products: Product[] = [
     description: 'Ефективно почистване само с вода, без препарати. Премахва прах, мазнини и замърсявания, без да оставя следи, мъх или петна. Подходяща за стъкла, огледала, душ кабини, инокс, екрани и мебели. XXL размер 30×40 см.',
     price: 13.99,
     images: ['/images/products/prod-01/1.png','/images/products/prod-01/2.jpg','/images/products/prod-01/3.jpg','/images/products/prod-01/4.jpg','/images/products/prod-01/5.jpg','/images/products/prod-01/6.jpg'],
-    category: 'Дом & Кухня', inStock: true, minOrder: 1, unit: 'компл.',
+    category: 'Дом & Кухня', inStock: true, minOrder: 1, unit: 'компл.', badge: 'Бестселър',
   },
   {
     id: 'prod-02',

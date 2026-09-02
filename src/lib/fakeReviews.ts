@@ -83,6 +83,9 @@ export interface FakeReview {
   daysAgo: number
 }
 
+// Products the client wants to look flawless (e.g. the best-seller) — every review 5 stars.
+const ALL_FIVE_STARS = new Set(['prod-01'])
+
 export function getFakeReviews(productId: string): FakeReview[] {
   const reviewCount = 7 + Math.floor(seededRandom(productId + ':reviewcount') * 4) // 7–10 total
   const reviews: FakeReview[] = []
@@ -90,7 +93,7 @@ export function getFakeReviews(productId: string): FakeReview[] {
     const seed = `${productId}:review:${i}`
     reviews.push({
       name: pick(NAMES, seed + ':name'),
-      rating: seededRandom(seed + ':rating') > 0.25 ? 5 : 4,
+      rating: ALL_FIVE_STARS.has(productId) || seededRandom(seed + ':rating') > 0.25 ? 5 : 4,
       text: pick(TEXTS, seed + ':text'),
       daysAgo: 1 + Math.floor(seededRandom(seed + ':days') * 60),
     })
