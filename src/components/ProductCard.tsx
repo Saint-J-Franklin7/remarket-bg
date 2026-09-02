@@ -64,7 +64,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <p className="text-xs text-gray-400 mb-2">Мин. {product.minOrder} {product.unit}</p>
         )}
 
-        <StarRating productId={product.id} className="mb-2" />
+        <StarRating productId={product.id} className="mb-2" compact />
 
         <div className="flex items-center justify-between mt-auto pt-3">
           <div>

@@ -56,7 +56,7 @@ export default function ProductDetail({ product }: { product: Product }) {
           <StarRating productId={product.id} className="mb-4" />
 
           {/* Price */}
-          <div className="flex items-baseline gap-2 mb-2">
+          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 mb-2">
             <span className="text-4xl font-black text-dark">{product.price.toFixed(2)}</span>
             <span className="text-xl text-gray-400">€</span>
             <span className="text-sm text-gray-400">/ {product.unit}</span>
