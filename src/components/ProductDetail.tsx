@@ -16,15 +16,22 @@ export default function ProductDetail({ product }: { product: Product }) {
   const router = useRouter()
   const [qty, setQty] = useState(product.minOrder)
   const [added, setAdded] = useState(false)
+  const [variantIndex, setVariantIndex] = useState(0)
+
+  const variant = product.variants?.[variantIndex]
+  const price = variant?.price ?? product.price
+  const cartProduct = variant
+    ? { ...product, id: `${product.id}::${variant.label}`, name: `${product.name} (${variant.label})`, price: variant.price }
+    : product
 
   function handleAdd() {
-    addItem(product, qty)
+    addItem(cartProduct, qty)
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }
 
   function handleBuyNow() {
-    addItem(product, qty)
+    addItem(cartProduct, qty)
     router.push('/checkout')
   }
 
@@ -56,12 +63,31 @@ export default function ProductDetail({ product }: { product: Product }) {
 
           <StarRating productId={product.id} className="mb-4" href="#reviews" />
 
+          {product.variants && (
+            <div className="flex flex-wrap gap-2 mb-4">
+              {product.variants.map((v, i) => (
+                <button
+                  key={v.label}
+                  type="button"
+                  onClick={() => setVariantIndex(i)}
+                  className={`border-2 rounded-xl px-4 py-2 text-sm font-semibold transition-all ${
+                    i === variantIndex
+                      ? 'border-brand bg-brand-50 text-brand'
+                      : 'border-border hover:border-gray-300 text-dark'
+                  }`}
+                >
+                  {v.label}
+                </button>
+              ))}
+            </div>
+          )}
+
           {/* Price */}
           <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 mb-2">
-            <span className="text-4xl font-black text-dark">{product.price.toFixed(2)}</span>
+            <span className="text-4xl font-black text-dark">{price.toFixed(2)}</span>
             <span className="text-xl text-gray-400">€</span>
             <span className="text-sm text-gray-400">/ {product.unit}</span>
-            <span className="text-lg text-gray-400 line-through">{getCompareAtPrice(product.id, product.price).toFixed(2)} €</span>
+            <span className="text-lg text-gray-400 line-through">{getCompareAtPrice(cartProduct.id, price).toFixed(2)} €</span>
           </div>
 
           <CountdownTimer />

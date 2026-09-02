@@ -10,6 +10,7 @@ export interface Product {
   unit: string
   badge?: string
   featured?: boolean
+  variants?: { label: string; price: number }[]
 }
 
 export interface CartItem {
