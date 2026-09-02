@@ -8,7 +8,7 @@ function getResend() {
 }
 
 export async function sendOrderConfirmationToCustomer(order: Order) {
-  const courierName = order.delivery.courier === 'econt' ? 'Еконт' : order.delivery.courier === 'speedy' ? 'Спиди' : 'Доставка до адрес'
+  const courierName = order.delivery.courier === 'econt' ? 'Еконт' : order.delivery.courier === 'speedy' ? 'Спиди' : order.delivery.courier === 'pigeon' ? 'Pigeon Express' : 'Доставка до адрес'
   const itemsHtml = order.items.map(i => `
     <tr>
       <td style="padding:8px 0;border-bottom:1px solid #eee;color:#374151;">${i.name}</td>
@@ -61,7 +61,7 @@ export async function sendOrderConfirmationToCustomer(order: Order) {
 }
 
 export async function sendNewOrderToSeller(order: Order) {
-  const courierName = order.delivery.courier === 'econt' ? 'Еконт' : order.delivery.courier === 'speedy' ? 'Спиди' : 'Доставка до адрес'
+  const courierName = order.delivery.courier === 'econt' ? 'Еконт' : order.delivery.courier === 'speedy' ? 'Спиди' : order.delivery.courier === 'pigeon' ? 'Pigeon Express' : 'Доставка до адрес'
   const itemsHtml = order.items.map(i => `
     <tr>
       <td style="padding:8px 0;border-bottom:1px solid #eee;color:#374151;">${i.name}</td>

@@ -23,7 +23,7 @@ export interface CourierOffice {
   name: string
   address: string
   city: string
-  courier: 'econt' | 'speedy'
+  courier: 'econt' | 'speedy' | 'pigeon'
 }
 
 export interface OrderItem {
@@ -42,7 +42,7 @@ export interface Order {
     email: string
   }
   delivery: {
-    courier: 'econt' | 'speedy' | 'home'
+    courier: 'econt' | 'speedy' | 'pigeon' | 'home'
     officeId?: string
     officeName?: string
     officeAddress?: string

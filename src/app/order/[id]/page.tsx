@@ -94,7 +94,7 @@ export default function OrderPage({ params }: { params: Promise<{ id: string }> 
         <div className="space-y-2 text-sm">
           <div className="flex gap-2">
             <span className="text-gray-400 w-20 shrink-0">Куриер</span>
-            <span className="font-semibold">{order.delivery.courier === 'econt' ? 'Еконт' : 'Спиди'}</span>
+            <span className="font-semibold">{order.delivery.courier === 'econt' ? 'Еконт' : order.delivery.courier === 'speedy' ? 'Спиди' : order.delivery.courier === 'pigeon' ? 'Pigeon Express' : 'До адрес'}</span>
           </div>
           <div className="flex gap-2">
             <span className="text-gray-400 w-20 shrink-0">Офис</span>

@@ -22,7 +22,7 @@ export default function CheckoutPage() {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
-  const [courier, setCourier] = useState<'econt' | 'speedy' | 'home'>('econt')
+  const [courier, setCourier] = useState<'econt' | 'speedy' | 'pigeon' | 'home'>('econt')
   const [homeCity, setHomeCity] = useState('')
   const [homeStreet, setHomeStreet] = useState('')
   const [homeNumber, setHomeNumber] = useState('')
@@ -211,8 +211,8 @@ export default function CheckoutPage() {
           <div className="bg-white rounded-2xl border border-border p-6">
             <h2 className="font-bold text-base mb-5">Избор на куриер</h2>
 
-            <div className="grid grid-cols-3 gap-2 mb-6">
-              {(['econt', 'speedy', 'home'] as const).map(c => (
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6">
+              {(['econt', 'speedy', 'pigeon', 'home'] as const).map(c => (
                 <button
                   key={c}
                   type="button"
@@ -223,7 +223,7 @@ export default function CheckoutPage() {
                       : 'border-border hover:border-gray-300 text-dark'
                   }`}
                 >
-                  {c === 'econt' ? '🟢 Еконт' : c === 'speedy' ? '🔴 Спиди' : '🏠 До адрес'}
+                  {c === 'econt' ? '🟢 Еконт' : c === 'speedy' ? '🔴 Спиди' : c === 'pigeon' ? '🕊️ Pigeon' : '🏠 До адрес'}
                 </button>
               ))}
             </div>
