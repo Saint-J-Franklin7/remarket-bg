@@ -58,6 +58,13 @@ export default function CheckoutPage() {
       .finally(() => setLoadingOffices(false))
   }, [debouncedQuery, courier])
 
+  // Keep the dropdown fully in view, it sits right above the footer near the bottom of the page
+  useEffect(() => {
+    if (showDropdown && officeResults.length > 0) {
+      dropdownRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+    }
+  }, [showDropdown, officeResults])
+
   // Reset office when courier changes
   useEffect(() => {
     setSelectedOffice(null)
@@ -299,7 +306,7 @@ export default function CheckoutPage() {
                 </div>
               </div>
             ) : (
-              <div ref={dropdownRef} className="relative">
+              <div ref={dropdownRef} className="relative scroll-mb-8">
                 <label className="block text-sm font-medium mb-1.5">Офис за доставка</label>
 
                 {selectedOffice ? (
