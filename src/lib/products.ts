@@ -169,7 +169,7 @@ export const products: Product[] = [
     name: 'Преносима бутилка за вода от неръждаема стомана за домашни любимци',
     description: 'Практично решение за осигуряване на вода за кучета по време на разходки, пътувания и активности на открито. Сферична форма с вградена купичка за пиене. Изработена от неръждаема стомана 304. Система против разливане, вградена кука за закачане. Подходяща за разходки, планина, пътувания и къмпинг.',
     price: 19.90,
-    images: ['/images/products/prod-23b/0.png','/images/products/prod-23b/1.jpg','/images/products/prod-23b/2.jpg','/images/products/prod-23b/3.jpg','/images/products/prod-23b/4.jpg','/images/products/prod-23b/5.jpg','/images/products/prod-23b/6.jpg','/images/products/prod-23b/7.jpg','/images/products/prod-23b/8.jpg','/images/products/prod-23b/9.jpg'],
+    images: ['/images/products/prod-23b/new-promo.jpg','/images/products/prod-23b/0.png','/images/products/prod-23b/1.jpg','/images/products/prod-23b/2.jpg','/images/products/prod-23b/3.jpg','/images/products/prod-23b/4.jpg','/images/products/prod-23b/5.jpg','/images/products/prod-23b/6.jpg','/images/products/prod-23b/7.jpg','/images/products/prod-23b/8.jpg','/images/products/prod-23b/9.jpg'],
     category: 'Домашни любимци', inStock: true, minOrder: 1, unit: 'бр.',
   },
   {
@@ -353,7 +353,7 @@ export const products: Product[] = [
     name: 'Уплътнителни подложки за процеп на автомобилни седалки (2 бр.)',
     description: 'Запълва пролуката между седалката и централната конзола, за да не изпадат телефон, ключове и монети. Ограничава натрупването на трохи и прах. Полиуретан, за водача и пътника. 45×8×7,5 см.',
     price: 9.90,
-    images: ['/images/products/prod-48/1.jpg','/images/products/prod-48/2.jpg','/images/products/prod-48/3.jpg','/images/products/prod-48/4.jpg','/images/products/prod-48/5.jpg','/images/products/prod-48/6.jpg','/images/products/prod-48/7.jpg','/images/products/prod-48/8.jpg','/images/products/prod-48/9.png','/images/products/prod-48/10.png','/images/products/prod-48/11.jpg','/images/products/prod-48/12.jpg'],
+    images: ['/images/products/prod-48/new-promo.jpg','/images/products/prod-48/1.jpg','/images/products/prod-48/2.jpg','/images/products/prod-48/3.jpg','/images/products/prod-48/4.jpg','/images/products/prod-48/5.jpg','/images/products/prod-48/6.jpg','/images/products/prod-48/7.jpg','/images/products/prod-48/8.jpg','/images/products/prod-48/9.png','/images/products/prod-48/10.png','/images/products/prod-48/11.jpg','/images/products/prod-48/12.jpg'],
     category: 'Автомобили', inStock: true, minOrder: 1, unit: 'компл.',
   },
   {
