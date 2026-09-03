@@ -11,7 +11,7 @@ export default function Footer() {
             <span className="font-bold text-xl">Ре<span className="text-brand">Маркет</span></span>
           </div>
           <p className="text-sm text-white/60 leading-relaxed mb-3">
-            Качествени продукти на достъпна цена. Бърза доставка с Еконт и Спиди до всяка точка в страната.
+            Качествени продукти на достъпна цена. Бърза доставка с Еконт, Спиди и Pigeon Express до всяка точка в страната.
           </p>
           <p className="text-xs text-white/30">www.remarketbg.com</p>
         </div>
@@ -41,12 +41,13 @@ export default function Footer() {
         <div id="contact">
           <h3 className="font-semibold text-xs uppercase tracking-widest text-white/40 mb-4">Доставка & Контакт</h3>
           <p className="text-sm text-white/70 leading-relaxed mb-4">
-            Доставяме с <strong className="text-white">Еконт</strong> и <strong className="text-white">Спиди</strong>.<br />
+            Доставяме с <strong className="text-white">Еконт</strong>, <strong className="text-white">Спиди</strong> и <strong className="text-white">Pigeon Express</strong>.<br />
             Плащане при получаване — наложен платеж.
           </p>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <span className="bg-white/10 rounded-lg px-3 py-1.5 text-xs font-semibold">Еконт</span>
             <span className="bg-white/10 rounded-lg px-3 py-1.5 text-xs font-semibold">Спиди</span>
+            <span className="bg-white/10 rounded-lg px-3 py-1.5 text-xs font-semibold">Pigeon Express</span>
           </div>
         </div>
       </div>

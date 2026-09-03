@@ -136,7 +136,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
           {/* Delivery info */}
           <div className="mt-6 bg-surface rounded-xl p-4 border border-border text-sm text-gray-500 space-y-1.5">
-            <p>🚚 Доставка с <strong className="text-dark">Еконт</strong> или <strong className="text-dark">Спиди</strong></p>
+            <p>🚚 Доставка с <strong className="text-dark">Еконт</strong>, <strong className="text-dark">Спиди</strong> или <strong className="text-dark">Pigeon Express</strong></p>
             <p>💳 Плащане при получаване — наложен платеж</p>
             <p>📦 Безплатна доставка при поръчки над 100 €</p>
           </div>

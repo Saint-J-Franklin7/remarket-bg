@@ -19,7 +19,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-br from-brand-dark via-[#1a3a9e] to-[#0076b8] opacity-80" />
         <div className="relative max-w-6xl mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 text-white text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
-            🚚 Доставка с Еконт и Спиди — Наложен платеж
+            🚚 Доставка с Еконт, Спиди и Pigeon — Наложен платеж
           </div>
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-black mb-5 leading-tight">
             Качество и <span className="text-brand">бърза доставка</span>.
@@ -71,7 +71,7 @@ export default function HomePage() {
       <section className="border-t border-border py-10 bg-white">
         <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
-            ['🚚', 'Бърза доставка', 'Еконт & Спиди'],
+            ['🚚', 'Бърза доставка', 'Еконт, Спиди & Pigeon'],
             ['💳', 'Наложен платеж', 'Плащате при получаване'],
             ['📦', 'Безплатна доставка', 'При поръчки над 100 €'],
             ['🔄', 'Лесно връщане', '14 дни без въпроси'],
